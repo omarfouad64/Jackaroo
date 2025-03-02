@@ -35,7 +35,7 @@ public class Board implements BoardManager{
 
 	        track.set(basePosition - 1, new Cell(CellType.BASE));
 	        
-	        int entryPosition = basePosition - 3;
+	        int entryPosition = basePosition - 2;
 	        track.set(entryPosition - 1, new Cell(CellType.ENTRY));
 	    }
 	}
