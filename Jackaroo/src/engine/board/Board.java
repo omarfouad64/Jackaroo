@@ -18,7 +18,7 @@ public class Board implements BoardManager{
 		this.safeZones = new ArrayList<>();
 		this.splitDistance = 3;
 		initializeTrack();
-	    assignTrapCells();
+	    assignTrapCell();
 	    initializeSafeZones(colourOrder);
 	}
 	
@@ -40,7 +40,7 @@ public class Board implements BoardManager{
 	    }
 	}
 
-    private void assignTrapCells() {
+    private void assignTrapCell() {
         Random rand = new Random();
         int trapsAssigned = 0;
 

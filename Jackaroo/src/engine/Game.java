@@ -46,18 +46,6 @@ public class Game implements GameManager {
         this.firePit = new ArrayList<>();
 	}
 
-	public int getCurrentPlayerIndex() {
-		return currentPlayerIndex;
-	}
-
-	public void setCurrentPlayerIndex(int currentPlayerIndex) {
-		this.currentPlayerIndex = currentPlayerIndex;
-	}
-
-	public int getTurn() {
-		return turn;
-	}
-
 	public void setTurn(int turn) {
 		this.turn = turn;
 	}

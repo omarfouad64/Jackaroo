@@ -30,7 +30,7 @@ public class Deck {
 	        while ((line = br.readLine()) != null) {
 	            String[] data = line.split(",");
 
-	            String code = data[0];
+	            int code = Integer.parseInt(data[0]);
 	            int frequency = Integer.parseInt(data[1]);
 	            String name = data[2];
 	            String description = data[3];
@@ -41,25 +41,25 @@ public class Deck {
 	                int rank = Integer.parseInt(data[4]);
 	                Suit suit = Suit.valueOf(data[5].toUpperCase());
 	                switch (code) {
-	                    case "1":
+	                    case 1:
 	                        card = new Ace(name, description, suit, boardManager, gameManager);
 	                        break;
-	                    case "13":
+	                    case 13:
 	                        card = new King(name, description, suit, boardManager, gameManager);
 	                        break;
-	                    case "12":
+	                    case 12:
 	                        card = new Queen(name, description, suit, boardManager, gameManager);
 	                        break;
-	                    case "10":
+	                    case 10:
 	                        card = new Ten(name, description, suit, boardManager, gameManager);
 	                        break;
-	                    case "7":
+	                    case 7:
 	                        card = new Seven(name, description, suit, boardManager, gameManager);
 	                        break;
-	                    case "5":
+	                    case 5:
 	                        card = new Five(name, description, suit, boardManager, gameManager);
 	                        break;
-	                    case "4":
+	                    case 4:
 	                        card = new Four(name, description, suit, boardManager, gameManager);
 	                        break;
 	                    default:
@@ -67,10 +67,10 @@ public class Deck {
 	                }
 	            } else {
 	                switch (code) {
-	                    case "14":
+	                    case 14:
 	                        card = new Burner(name, description, boardManager, gameManager);
 	                        break;
-	                    case "15":
+	                    case 15:
 	                        card = new Saver(name, description, boardManager, gameManager);
 	                        break;
 	                    default:
