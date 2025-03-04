@@ -11,6 +11,7 @@ import engine.board.BoardManager;
 import model.card.standard.Ace;
 import model.card.standard.Five;
 import model.card.standard.Four;
+import model.card.standard.Jack;
 import model.card.standard.King;
 import model.card.standard.Queen;
 import model.card.standard.Seven;
@@ -22,9 +23,10 @@ import model.card.wild.Saver;
 
 public class Deck {
 	private static final String CARDS_FILE = "Cards.csv";
-	public static ArrayList<Card> cardsPool = new ArrayList<>();
+	private static ArrayList<Card> cardsPool = new ArrayList<>();
 	
 	public static void loadCardPool(BoardManager boardManager, GameManager gameManager) throws IOException {
+		cardsPool = new ArrayList<>();
 	    try (BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE))) {
 	        String line;
 	        while ((line = br.readLine()) != null) {
@@ -37,46 +39,44 @@ public class Deck {
 
 	            Card card;
 
-	            if (data.length == 6) { // Standard card (with rank and suit)
+	            if (code == 14) {
+                    card = new Burner(name, description, boardManager, gameManager);
+	          } else if (code == 15) {
+                    card = new Saver(name, description, boardManager, gameManager);
+                }
+	            else {
 	                int rank = Integer.parseInt(data[4]);
 	                Suit suit = Suit.valueOf(data[5].toUpperCase());
 	                switch (code) {
 	                    case 1:
 	                        card = new Ace(name, description, suit, boardManager, gameManager);
 	                        break;
-	                    case 13:
-	                        card = new King(name, description, suit, boardManager, gameManager);
-	                        break;
-	                    case 12:
-	                        card = new Queen(name, description, suit, boardManager, gameManager);
-	                        break;
-	                    case 10:
-	                        card = new Ten(name, description, suit, boardManager, gameManager);
-	                        break;
-	                    case 7:
-	                        card = new Seven(name, description, suit, boardManager, gameManager);
+	                    case 4:
+	                        card = new Four(name, description, suit, boardManager, gameManager);
 	                        break;
 	                    case 5:
 	                        card = new Five(name, description, suit, boardManager, gameManager);
 	                        break;
-	                    case 4:
-	                        card = new Four(name, description, suit, boardManager, gameManager);
+	                    case 7:
+	                        card = new Seven(name, description, suit, boardManager, gameManager);
+	                        break;
+	                    case 10:
+	                        card = new Ten(name, description, suit, boardManager, gameManager);
+	                        break;
+	                    case 11:
+	                        card = new Jack(name, description, suit, boardManager, gameManager);
+	                        break;
+	                    case 12:
+	                        card = new Queen(name, description, suit, boardManager, gameManager);
+	                        break;
+	                    case 13:
+	                        card = new King(name, description, suit, boardManager, gameManager);
 	                        break;
 	                    default:
-	                    	card = null;
+	                    	 card = new Standard(name, description, rank, suit, boardManager, gameManager);
+	                    	 break;
 	                }
-	            } else {
-	                switch (code) {
-	                    case 14:
-	                        card = new Burner(name, description, boardManager, gameManager);
-	                        break;
-	                    case 15:
-	                        card = new Saver(name, description, boardManager, gameManager);
-	                        break;
-	                    default:
-	                        card = null;
-	                }
-	            }
+	            } 
 
 	            if (card != null) {
 	                for (int i = 0; i < frequency; i++) {

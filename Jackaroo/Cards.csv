@@ -50,5 +50,5 @@
 13,2,King,Fields a marble from the Home Zone or Moves one of your own marbles 13 steps forward killing all marbles in their path.,13,CLUB
 13,1,King,Fields a marble from the Home Zone or Moves one of your own marbles 13 steps forward killing all marbles in their path.,13,DIAMOND
 13,3,King,Fields a marble from the Home Zone or Moves one of your own marbles 13 steps forward killing all marbles in their path.,13,HEART
-14,1,MarbleBurner,"Selects an opponent marble, that is on track, to send home.",,
-15,1,MarbleSaver,"Selects one of your marbles, that is on track / base, to send to a random empty safe zone cell.",,
+14,1,MarbleBurner,Selects an opponent marble that is on track to send home.,,
+15,1,MarbleSaver,Selects one of your marble that is on track / base to send to a random empty safe zone cell.,,

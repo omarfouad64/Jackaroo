@@ -29,14 +29,16 @@ public class Board implements BoardManager{
 	    for (int i = 0; i < totalCells; i++) {
 	        track.add(new Cell(CellType.NORMAL));
 	    }
-	    
 	    for (int i = 1; i <= 4; i++) {
 	        int basePosition = 25 * i;
-
-	        track.set(basePosition - 1, new Cell(CellType.BASE));
-	        
+	        if (basePosition == 100) {
+		        track.set(0, new Cell(CellType.BASE));
+	        }
+	        else {
+		        track.set(basePosition, new Cell(CellType.BASE));
+	        }
 	        int entryPosition = basePosition - 2;
-	        track.set(entryPosition - 1, new Cell(CellType.ENTRY));
+	        track.set(entryPosition, new Cell(CellType.ENTRY));
 	    }
 	}
 
