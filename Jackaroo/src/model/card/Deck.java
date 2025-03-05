@@ -41,11 +41,9 @@ public class Deck {
 
 	            if (code == 14) {
 	            	description += data[4] += data[5];
-	            	System.out.println("Burner Description: " + description);
                     card = new Burner(name, description, boardManager, gameManager);
 	          } else if (code == 15) {
 	            	description += data[4] += data[5];
-	        	    System.out.println("Saver Description: " + description);
                     card = new Saver(name, description, boardManager, gameManager);
                 }
 	            else {
