@@ -30,7 +30,7 @@ public class Deck {
 	    try (BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE))) {
 	        String line;
 	        while ((line = br.readLine()) != null) {
-	            String[] data = line.split(",");
+	            String[] data = line.split(",",-1);
 
 	            int code = Integer.parseInt(data[0]);
 	            int frequency = Integer.parseInt(data[1]);
@@ -40,8 +40,12 @@ public class Deck {
 	            Card card;
 
 	            if (code == 14) {
+	            	description += data[4] += data[5];
+	            	System.out.println("Burner Description: " + description);
                     card = new Burner(name, description, boardManager, gameManager);
 	          } else if (code == 15) {
+	            	description += data[4] += data[5];
+	        	    System.out.println("Saver Description: " + description);
                     card = new Saver(name, description, boardManager, gameManager);
                 }
 	            else {
