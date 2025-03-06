@@ -24,7 +24,6 @@ public class Board implements BoardManager{
 	
 	private void initializeTrack() {
 	    int totalCells = 100;
-	    track.clear();
 	    
 	    for (int i = 0; i < totalCells; i++) {
 	        track.add(new Cell(CellType.NORMAL));
@@ -58,8 +57,8 @@ public class Board implements BoardManager{
     }
 	
     private void initializeSafeZones(ArrayList<Colour> colourOrder) {
-        for (Colour colour : colourOrder) {
-            SafeZone safeZone = new SafeZone(colour);
+        for (int i = 0; i < 4; i++) {
+            SafeZone safeZone = new SafeZone(colourOrder.get(i));
             safeZones.add(safeZone);
         }
     }

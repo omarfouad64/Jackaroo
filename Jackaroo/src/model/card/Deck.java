@@ -27,7 +27,7 @@ public class Deck {
 	
 	public static void loadCardPool(BoardManager boardManager, GameManager gameManager) throws IOException {
 		cardsPool = new ArrayList<>();
-	    try (BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE))) {
+	    BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE));
 	        String line;
 	        while ((line = br.readLine()) != null) {
 	            String[] data = line.split(",",-1);
@@ -40,10 +40,10 @@ public class Deck {
 	            Card card;
 
 	            if (code == 14) {
-	            	description += data[4] += data[5];
+	            	description += (data[4] + data[5]);
                     card = new Burner(name, description, boardManager, gameManager);
 	          } else if (code == 15) {
-	            	description += data[4] += data[5];
+	            	description += (data[4] + data[5]);
                     card = new Saver(name, description, boardManager, gameManager);
                 }
 	            else {
@@ -85,10 +85,8 @@ public class Deck {
 	                    cardsPool.add(card);
 	                }
 	            }
-	        }
 	    }
 	}
-
 	
 	public static ArrayList<Card> drawCards() {
         Collections.shuffle(cardsPool);
