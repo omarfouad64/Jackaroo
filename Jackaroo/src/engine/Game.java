@@ -46,10 +46,6 @@ public class Game implements GameManager {
         this.firePit = new ArrayList<>();
 	}
 
-	public void setTurn(int turn) {
-		this.turn = turn;
-	}
-
 	public Board getBoard() {
 		return board;
 	}

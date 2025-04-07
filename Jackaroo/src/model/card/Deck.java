@@ -40,10 +40,8 @@ public class Deck {
 	            Card card;
 
 	            if (code == 14) {
-	            	description += (data[4] + data[5]);
                     card = new Burner(name, description, boardManager, gameManager);
 	          } else if (code == 15) {
-	            	description += (data[4] + data[5]);
                     card = new Saver(name, description, boardManager, gameManager);
                 }
 	            else {

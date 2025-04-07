@@ -1,7 +1,9 @@
 package engine.board;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import engine.GameManager;
 import model.Colour;
@@ -41,20 +43,21 @@ public class Board implements BoardManager{
 	    }
 	}
 
-    private void assignTrapCell() {
-        Random rand = new Random();
-        int trapsAssigned = 0;
+	private void assignTrapCell() {
+	    Random rand = new Random();
+	    int trapsAssigned = 0;
+	    List<Cell> validCells = track.stream()
+	        .filter(cell -> cell.getCellType() == CellType.NORMAL && !cell.isTrap())
+	        .collect(Collectors.toList());
 
-        while (trapsAssigned < 8) {
-            int randomIndex = rand.nextInt(track.size());
-            Cell currentCell = track.get(randomIndex);
-
-            if (currentCell.getCellType() == CellType.NORMAL && !currentCell.isTrap()) {
-                currentCell.setTrap(true);
-                trapsAssigned++;
-            }
-        }
-    }
+	    while (trapsAssigned < 8 && !validCells.isEmpty()) {
+	        int randomIndex = rand.nextInt(validCells.size());
+	        Cell selectedCell = validCells.get(randomIndex);
+	        selectedCell.setTrap(true);
+	        validCells.remove(randomIndex); // Remove to prevent re-selection
+	        trapsAssigned++;
+	    }
+	}
 	
     private void initializeSafeZones(ArrayList<Colour> colourOrder) {
         for (int i = 0; i < 4; i++) {
