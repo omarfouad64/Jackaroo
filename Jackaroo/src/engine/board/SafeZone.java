@@ -17,6 +17,15 @@ public class SafeZone {
 	    }
 	}
 
+	public boolean isFull() {
+		for (int i = 0 ; i < cells.size(); i++) {
+			if (cells.get(i).getCellType() == null) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	public Colour getColour() {
 		return colour;
 	}

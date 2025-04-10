@@ -46,6 +46,10 @@ public class Game implements GameManager {
         this.firePit = new ArrayList<>();
 	}
 
+	public Colour getActivePlayerColour() {
+		return players.get(currentPlayerIndex).getColour();
+	}
+	
 	public Board getBoard() {
 		return board;
 	}

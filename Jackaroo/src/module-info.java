@@ -5,5 +5,5 @@
  * 
  */
 module Jackaroo {
-	requires junit;
+    requires junit;
 }
