@@ -19,6 +19,7 @@ public class Board implements BoardManager{
 	 private final ArrayList<Cell> track;
 	 private final ArrayList<SafeZone> safeZones;
 	 private int splitDistance;
+
 	public Board(ArrayList<Colour> colourOrder, GameManager gameManager) {
 		super();
 		this.gameManager = gameManager;
@@ -119,7 +120,6 @@ public class Board implements BoardManager{
     		throw new IllegalMovementException();
     	}
     	else if (marblePositionTrack != -1) {
-			int currentMarblePositionTrack = marblePositionTrack;
     		if (getEntryPosition(marble.getColour()) + 4 - marblePositionTrack < steps) {
 				throw new IllegalMovementException();
 			}
@@ -128,8 +128,6 @@ public class Board implements BoardManager{
 				getSafeZone(marble.getColour()).get(stepsLeft).setMarble(marble);
 			}
 			else {
-				int currentMarblePositionrack = marblePositionTrack;
-
 				for (int i = 0 ; i < steps ; i++) {
 					if (marblePositionTrack + i > 99) {
 						fullPath.add(track.get((marblePositionTrack + i) % 100));
@@ -358,5 +356,4 @@ public class Board implements BoardManager{
 	public ArrayList<SafeZone> getSafeZones() {
 		return safeZones;
 	}
-    
 }

@@ -27,8 +27,8 @@ public class Deck {
 	
 	public static void loadCardPool(BoardManager boardManager, GameManager gameManager) throws IOException {
 		cardsPool = new ArrayList<>();
-	    BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE));
-	        String line;
+	    try (BufferedReader br = new BufferedReader(new FileReader(CARDS_FILE))) {
+			String line;
 	        while ((line = br.readLine()) != null) {
 	            String[] data = line.split(",",-1);
 
@@ -73,8 +73,8 @@ public class Deck {
 	                        card = new King(name, description, suit, boardManager, gameManager);
 	                        break;
 	                    default:
-	                    	 card = new Standard(name, description, rank, suit, boardManager, gameManager);
-	                    	 break;
+	                    	card = new Standard(name, description, rank, suit, boardManager, gameManager);
+	                    	break;
 	                }
 	            } 
 
@@ -83,7 +83,11 @@ public class Deck {
 	                    cardsPool.add(card);
 	                }
 	            }
-	    }
+			}
+		}
+		catch (IOException e) {
+			System.err.println("Error reading the cards file: " + e.getMessage());
+		}    
 	}
 	
 	public static ArrayList<Card> drawCards() {
@@ -94,5 +98,14 @@ public class Deck {
         }
         return drawnCards;
     }
-	
+
+	public static void refillPool(ArrayList<Card> cards) {
+		for (int i = 0 ; i < cards.size() ; i++) {
+			cardsPool.add(cards.get(i));
+		}
+	}
+
+	public static int getPoolSize() {
+		return cardsPool.size();
+	}
 }

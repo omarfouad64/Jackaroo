@@ -33,5 +33,4 @@ public class SafeZone {
 	public ArrayList<Cell> getCells() {
 		return cells;
 	}
-
 }

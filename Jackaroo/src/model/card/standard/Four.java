@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import engine.GameManager;
 import engine.board.BoardManager;
+import exception.ActionException;
+import exception.InvalidMarbleException;
 import model.player.Marble;
 
 public class Four extends Standard {
@@ -12,6 +14,12 @@ public class Four extends Standard {
 	}
 	
 	public boolean validateMarbleSize(ArrayList<Marble> marbles) {
-		return marbles.size() == 4;
+		return marbles.size() == 1;
+	}
+
+	public void act(ArrayList<Marble> marbles) throws ActionException, InvalidMarbleException {
+		if (marbles.size() == 1) {
+			boardManager.moveBy(marbles.get(0), 4, false);
+		}
 	}
 }
