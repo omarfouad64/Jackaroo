@@ -19,7 +19,7 @@ public class Four extends Standard {
 
 	public void act(ArrayList<Marble> marbles) throws ActionException, InvalidMarbleException {
 		if (marbles.size() == 1) {
-			boardManager.moveBy(marbles.get(0), 4, false);
+			boardManager.moveBy(marbles.get(0), -4, false);
 		}
 	}
 }

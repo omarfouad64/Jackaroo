@@ -41,13 +41,17 @@ public class Deck {
 
 	            if (code == 14) {
                     card = new Burner(name, description, boardManager, gameManager);
-	          } else if (code == 15) {
+	            } 
+	            else if (code == 15) {
                     card = new Saver(name, description, boardManager, gameManager);
                 }
 	            else {
 	                int rank = Integer.parseInt(data[4]);
 	                Suit suit = Suit.valueOf(data[5].toUpperCase());
 	                switch (code) {
+	                	case 0:
+	                		card = new Standard(name, description, rank, suit, boardManager, gameManager);
+	                		break;
 	                    case 1:
 	                        card = new Ace(name, description, suit, boardManager, gameManager);
 	                        break;
@@ -73,11 +77,9 @@ public class Deck {
 	                        card = new King(name, description, suit, boardManager, gameManager);
 	                        break;
 	                    default:
-	                    	card = new Standard(name, description, rank, suit, boardManager, gameManager);
-	                    	break;
+	                    	throw new IOException(br.readLine());
 	                }
 	            } 
-
 	            if (card != null) {
 	                for (int i = 0; i < frequency; i++) {
 	                    cardsPool.add(card);

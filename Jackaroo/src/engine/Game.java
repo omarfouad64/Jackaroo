@@ -10,6 +10,7 @@ import exception.CannotDiscardException;
 import exception.CannotFieldException;
 import exception.GameException;
 import exception.IllegalDestroyException;
+import exception.IllegalMovementException;
 import exception.InvalidCardException;
 import exception.InvalidMarbleException;
 import exception.SplitOutOfRangeException;
@@ -55,19 +56,19 @@ public class Game implements GameManager {
         this.firePit = new ArrayList<>();
 	}
 
-	void selectCard(Card card) throws InvalidCardException {
+	public void selectCard(Card card) throws InvalidCardException {
 		players.get(currentPlayerIndex).selectCard(card);
 	}
 
-	void selectMarble(Marble marble) throws InvalidMarbleException {
+	public void selectMarble(Marble marble) throws InvalidMarbleException {
 		players.get(currentPlayerIndex).selectMarble(marble);
 	}
 
-	void deselectAll() {
+	public void deselectAll() {
 		players.get(currentPlayerIndex).deselectAll();
 	}
 
-	void editSplitDistance(int splitDistance) throws SplitOutOfRangeException {
+	public void editSplitDistance(int splitDistance) throws SplitOutOfRangeException {
 		if (splitDistance < 1 || splitDistance > 6) {
 			throw new SplitOutOfRangeException("Split distance out of range: " + splitDistance);
 		}
@@ -77,42 +78,52 @@ public class Game implements GameManager {
 	}
 
 	public boolean canPlayTurn() {
-		
-	}
+	    int cardsInHand = players.get(currentPlayerIndex).getHand().size();
+	    if (cardsInHand == turn) {
+	        return true;
+	    }
+	    return false;
 
+	}
+	// can't find the thing that makes the null occurs
 	public void playPlayerTurn() throws GameException {
-
+		if (canPlayTurn()) {
+			throw new IllegalMovementException("Player cannot play this turn.");
+		}
+		players.get(currentPlayerIndex).play();
 	}
-	
 
-	void endPlayerTurn() {
+	public void endPlayerTurn() {
 		firePit.add(players.get(currentPlayerIndex).getSelectedCard());
 		for (int i = 0  ; i < players.get(currentPlayerIndex).getHand().size() ; i++) {
-			if (players.get(currentPlayerIndex).getHand().get(i).equals(players.get(currentPlayerIndex).getSelectedCard())) {
+			if (players.get(currentPlayerIndex).getHand().get(i) != null && players.get(currentPlayerIndex).getHand().get(i) == players.get(currentPlayerIndex).getSelectedCard()) {
 				players.get(currentPlayerIndex).getHand().remove(i);
 				break;
 			}
 		}
 		players.get(currentPlayerIndex).deselectAll();
-		currentPlayerIndex = (currentPlayerIndex + 1) % players.size();
+		currentPlayerIndex++;
+		if (currentPlayerIndex == 4) {
+			currentPlayerIndex = 0;
+		}
 		if (currentPlayerIndex == 0) {
     		turn++;
 		}
 		if (turn == 4) {
 			turn = 0;
-	
 			for (Player player : players) {
+				if (Deck.getPoolSize() < 4) {
+				    Deck.refillPool(firePit);
+				    firePit.clear();
+				}
 				ArrayList<Card> newHand = Deck.drawCards();
 				player.setHand(newHand);
 			}
-		}
-		if (Deck.getPoolSize() < 4) {
-			Deck.refillPool(firePit);
-			firePit.clear();
+			
 		}
 	}
 
-	Colour checkWin() {
+	public Colour checkWin() {
 		for (int i = 0 ; i < 4 ; i++) {
 			if (board.getSafeZones().get(i).isFull()) {
 				return board.getSafeZones().get(i).getColour();
@@ -122,7 +133,13 @@ public class Game implements GameManager {
 	}
 
 	public void sendHome(Marble marble) {
-		players.get(currentPlayerIndex).regainMarble(marble);
+	    for (Player player : players) {
+	        if (player.getColour().equals(marble.getColour())) {
+	            player.regainMarble(marble);
+	            return;
+	        }
+	    }
+		throw new IllegalArgumentException("Player with marble color not found.");
 	}
 
 	public void fieldMarble() throws CannotFieldException, IllegalDestroyException {
@@ -137,11 +154,17 @@ public class Game implements GameManager {
 	}
 
 	public void discardCard(Colour colour) throws CannotDiscardException {
+		if (colour == null) {
+			throw new CannotDiscardException("No colour selected!");
+		}
+		if (colour == getActivePlayerColour()) {
+			throw new CannotDiscardException("Players cannot discard a card from themselves!");
+		}
 		Random r = new Random();
 		for (int i = 0 ; i < players.size() ; i++) {
-			if (players.get(i).getColour() == colour) {
-				if (players.get(i).getHand() == null) {
-					throw new CannotDiscardException("No card selected!");
+			if (players.get(i).getColour().equals(colour)) {
+				if (players.get(i).getHand() == null || players.get(i).getHand().size() == 0) {
+					throw new CannotDiscardException("Opponent has no cards left!");
 				}
 				int randomIndex = r.nextInt(players.get(i).getHand().size());
 				firePit.add(players.get(i).getHand().get(randomIndex));
@@ -157,8 +180,8 @@ public class Game implements GameManager {
 		while (randomPlayer == currentPlayerIndex) {
 			randomPlayer = r.nextInt(players.size());
 		}
-		if (players.get(randomPlayer).getHand() == null) {
-			throw new CannotDiscardException("No card selected!");
+		if (players.get(randomPlayer).getHand() == null || players.get(randomPlayer).getHand().size() == 0) {
+			throw new CannotDiscardException("Opponent has no cards left!");
 		}
 		int randomIndex = r.nextInt(players.get(randomPlayer).getHand().size());
 		firePit.add(players.get(randomPlayer).getHand().get(randomIndex));

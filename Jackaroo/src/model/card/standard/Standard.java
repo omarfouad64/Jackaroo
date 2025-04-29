@@ -18,10 +18,6 @@ public class Standard extends Card {
 		this.rank = rank;
 		this.suit = suit;
 	}
-	
-	public boolean validateMarbleSize(ArrayList<Marble> marbles) {
-		return marbles.size() == 1;
-	}
 
 	public void act(ArrayList<Marble> marbles) throws ActionException, InvalidMarbleException {
 		if (marbles.size() == 1) {

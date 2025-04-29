@@ -12,9 +12,9 @@ public class Five extends Standard {
 	public Five(String name, String description, Suit suit, BoardManager boardManager, GameManager gameManager) {
 		super(name, description, 5, suit, boardManager, gameManager);
 	}
-	
-	public boolean validateMarbleSize(ArrayList<Marble> marbles) {
-		return marbles.size() == 1;
+
+	public boolean validateMarbleColours(ArrayList<Marble> marbles) {
+		return true;
 	}
 
 	public void act(ArrayList<Marble> marbles) throws ActionException, InvalidMarbleException {

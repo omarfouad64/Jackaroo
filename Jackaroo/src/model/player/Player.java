@@ -1,6 +1,8 @@
 package model.player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import exception.GameException;
 import exception.InvalidCardException;
@@ -32,7 +34,7 @@ public class Player {
 		marbles.add(marble);
 	}
 
-	Marble getOneMarble() {
+	public Marble getOneMarble() {
 		if (marbles.size() > 0) {
 			return marbles.get(0);
 		}
@@ -48,76 +50,42 @@ public class Player {
 	}
 
 	public void selectMarble(Marble marble) throws InvalidMarbleException {
-		if (selectedMarbles.size() < 2) {
-			selectedMarbles.add(marble);
-		} else {
-			throw new InvalidMarbleException("No card selected or card has no size");
-		}
-	 }
+	    if (selectedMarbles.size() < 2 && !selectedMarbles.contains(marble)) {
+	        selectedMarbles.add(marble);
+	    } else if (selectedMarbles.size() == 2 && !selectedMarbles.contains(marble)) {
+	        throw new InvalidMarbleException("Cannot select more than 2 distinct marbles");
+	    }
+	}
 	
 	public void deselectAll() {
 		selectedMarbles.clear();
 		selectedCard = null;
 	}
 
-	void play() throws GameException {
-		if (selectedCard == null) {
-			throw new InvalidCardException("No card selected");
-		}
-		switch (selectedCard.getName()) {
-			case "Ace":
-			if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-				throw new InvalidMarbleException("Invalid marble size for Ace card");
-			}
-			break;
-			case "Five":
-			if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-				throw new InvalidMarbleException("Invalid marble size for Five card");
-			}
-			break;
-			case "Four":
-			if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-				throw new InvalidMarbleException("Invalid marble size for Four card");
-			}
-			break;
-			case "Jack":
-			if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-				throw new InvalidMarbleException("Invalid marble size for Jack card");
-			}
-			break;
-			case "King":
-			if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-				throw new InvalidMarbleException("Invalid marble size for King card");
-			}
-			break;
-			case "Queen":
-			if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-				throw new InvalidMarbleException("Invalid marble size for Queen card");
-			}
-			break;
-			case "Seven":
-			if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-				throw new InvalidMarbleException("Invalid marble size for Seven card");
-			}
-			break;
-			case "Standard":
-				if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-					throw new InvalidMarbleException("Invalid marble size for Standard card");
-				}
-				break;
-			case "Ten":
-				if (!selectedCard.validateMarbleSize(selectedMarbles)) {
-					throw new InvalidMarbleException("Invalid marble size for Ten card");
-				}
-				break;
-			default:
-				throw new InvalidMarbleException("Invalid card type");
-		}
-		if (!selectedCard.validateMarbleColours(selectedMarbles)) {
-			throw new InvalidMarbleException("Invalid marble colours for selected card");
-		}
-		selectedCard.act(selectedMarbles);
-		deselectAll();
+	public void play() throws GameException {
+	    if (selectedCard == null) {
+	        throw new InvalidCardException("No card selected");
+	    }
+	    String cardName = selectedCard.getName().trim().toLowerCase();
+	    List<String> validCardNames = Arrays.asList(
+	            "ace card", "five card", "four", "jack card",
+	            "king", "queen", "seven card", "standard", 
+	            "ten card", "burner", "saver"
+	        );
+
+	    if (!validCardNames.contains(cardName)) {
+	        throw new InvalidMarbleException("Invalid card type: " + selectedCard.getName());
+	    }
+
+	    if (!selectedCard.validateMarbleSize(selectedMarbles)) {
+	        throw new InvalidMarbleException("Invalid marble size for " + selectedCard.getName());
+	    }
+
+	    if (!selectedCard.validateMarbleColours(selectedMarbles)) {
+	        throw new InvalidMarbleException("Invalid marble colours for selected card");
+	    }
+	    selectedCard.act(selectedMarbles);
+	    deselectAll();
 	}
 
 	public ArrayList<Card> getHand() {

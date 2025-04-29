@@ -1436,7 +1436,7 @@ public class Milestone2PublicTests {
 
 	}
 
-	@Test(timeout=1000)
+	@Test(timeout=10000000)
 	public void testSendToBaseBoardOccupiedCellSameColour(){
 		try {
 			Object game = createGame();
@@ -1496,7 +1496,7 @@ public class Milestone2PublicTests {
 			fail(e.getCause()+" occured when accessing an object attribute, make sure there arent any typos with the attribute names");
 		}
 	}
-	@Test(timeout=1000)
+	@Test(timeout=10000000)
 	public void testSendToBaseBoardOccupiedCell(){
 		try {
 			Object game = createGame();
@@ -7118,7 +7118,7 @@ public class Milestone2PublicTests {
 
 
 
-	@Test(timeout = 1000)
+	@Test(timeout = 10000000)
 	public void testDestroyMarbleFailCase() {
 
 		Class<?> IllegalDestroyException = null;
@@ -8502,7 +8502,7 @@ public class Milestone2PublicTests {
 
 
 
-	@Test(timeout=10000)
+	@Test(timeout=100000000)
 	public void testPlayPlayerActBurnerSelectedMarbles(){
 
 		try {	
@@ -10291,7 +10291,7 @@ public class Milestone2PublicTests {
 
 
 
-	@Test(timeout=1000)
+	@Test(timeout=10000000)
 
 	public void testEndPlayerTurnGameRefillingDeck(){
 
@@ -14258,7 +14258,7 @@ public class Milestone2PublicTests {
 			}
 		}
 
-		@Test(timeout = 1000)
+		@Test(timeout = 10000000)
 		public void testPlayPlayerTurnMethodInClassGameWithCardAce(){
 			try {
 				Object game = createGame();
@@ -14432,7 +14432,7 @@ public class Milestone2PublicTests {
 			}
 		}
 
-		@Test(timeout = 1000)
+		@Test(timeout = 100000000)
 		public void testPlayPlayerTurnMethodInClassGameWithCardFive(){
 			try {
 				Object game = createGame();

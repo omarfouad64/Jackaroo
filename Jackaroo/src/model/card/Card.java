@@ -22,10 +22,12 @@ public abstract class Card {
 		this.gameManager = gameManager;
 	}
 
-	public abstract boolean validateMarbleSize(ArrayList<Marble> marbles);
+	public boolean validateMarbleSize(ArrayList<Marble> marbles) {
+		return marbles.size() == 1;
+	}
 
 	public boolean validateMarbleColours(ArrayList<Marble> marbles) {
-		for (int i = 0 ; i < marbles.size(); i++ ) {
+		for (int i = 0 ; i < marbles.size() ; i++ ) {
 			if (marbles.get(i).getColour() != gameManager.getActivePlayerColour()) {
 				return false;
 			}
