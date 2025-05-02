@@ -85,7 +85,7 @@ public class Game implements GameManager {
 	    return false;
 
 	}
-	// can't find the thing that makes the null occurs
+	
 	public void playPlayerTurn() throws GameException {
 		if (canPlayTurn()) {
 			throw new IllegalMovementException("Player cannot play this turn.");

@@ -57,7 +57,7 @@ public class Board implements BoardManager{
 	        .filter(cell -> cell.getCellType() == CellType.NORMAL && !cell.isTrap())
 	        .collect(Collectors.toList());
 
-	    if (validCells.isEmpty()) return; // No available cells to assign
+	    if (validCells.isEmpty()) return;
 
 	    int index = new Random().nextInt(validCells.size());
 	    validCells.get(index).setTrap(true);
@@ -115,26 +115,16 @@ public class Board implements BoardManager{
     }  
     
     private ArrayList<Cell> validateSteps(Marble marble, int steps) throws IllegalMovementException {
-    	
-    	
     	ArrayList<Cell> fullPath = new ArrayList<>();
         Colour marbleColour = marble.getColour();
-        
-        // 1. Get current positions
         int trackPos = getPositionInPath(track, marble);
         int safePos = getPositionInPath(getSafeZone(marbleColour), marble);
-        
-        // 2. Validate marble is on board
         if (trackPos == -1 && safePos == -1) {
             throw new IllegalMovementException("Marble is not on board");
         }
-
-        // 3. Handle track movement
         if (trackPos != -1) {
             int entryPos = getEntryPosition(marbleColour);
             boolean isOwnMarble = marbleColour.equals(gameManager.getActivePlayerColour());
-            
-            // Special case: Four card (backward movement)
             if (steps < 0) {
                 for (int i = 0; i <= Math.abs(steps); i++) {
                     int pos = (trackPos - i + track.size()) % track.size();
@@ -142,24 +132,16 @@ public class Board implements BoardManager{
                 }
                 return fullPath;
             }
-            
-            // Normal forward movement
             int remainingToEntry = (entryPos - trackPos + track.size()) % track.size();
-            
-            // Case 1: Movement stays on track
             if (steps <= remainingToEntry || !isOwnMarble) {
                 for (int i = 0; i <= steps; i++) {
                     fullPath.add(track.get((trackPos + i) % track.size()));
                 }
             } 
-            // Case 2: Movement enters safe zone (own marbles only)
             else {
-                // Track portion
                 for (int i = 0; i <= remainingToEntry; i++) {
                     fullPath.add(track.get((trackPos + i) % track.size()));
                 }
-                
-                // Safe zone portion
                 int safeSteps = steps - remainingToEntry;
                 if (safeSteps > getSafeZone(marbleColour).size()) {
                     throw new IllegalMovementException("Steps exceed safe zone capacity");
@@ -169,7 +151,6 @@ public class Board implements BoardManager{
                 }
             }
         }
-        // 4. Handle safe zone movement
         else if (safePos != -1) {
             if (steps < 0) {
                 throw new IllegalMovementException("Cannot move backwards in safe zone");
@@ -181,7 +162,6 @@ public class Board implements BoardManager{
                 fullPath.add(getSafeZone(marbleColour).get(safePos + i));
             }
         }
-        
         return fullPath;
     }
 
@@ -345,9 +325,6 @@ public class Board implements BoardManager{
 	}
 
 	public void sendToBase(Marble marble) throws CannotFieldException, IllegalDestroyException {
-		// 2 questions
-		// The test acts as if it doesn't read the setMarble() line
-		// the test acts as if it doesn't read the validateFielding() method
 		int baseCellPosition = getBasePosition(marble.getColour());
 		if (track.get(baseCellPosition).getMarble() == null) {
 			track.get(baseCellPosition).setMarble(marble);

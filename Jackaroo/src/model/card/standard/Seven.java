@@ -24,7 +24,6 @@ public class Seven extends Standard {
 		if (marbles.size() == 2) {
 			boardManager.moveBy(marbles.get(0), boardManager.getSplitDistance(), false);
 			boardManager.moveBy(marbles.get(1), 7 - boardManager.getSplitDistance(), false);
-
 		}
 	}
 }
