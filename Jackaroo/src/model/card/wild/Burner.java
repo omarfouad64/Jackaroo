@@ -14,10 +14,6 @@ public class Burner extends Wild {
 		super(name, description, boardManager, gameManager);
 	}
 	
-	public boolean validateMarbleSize(ArrayList<Marble> marbles) {
-		return marbles.size() == 1;
-	}
-	
 	public boolean validateMarbleColours(ArrayList<Marble> marbles) {
 	    for (Marble marble : marbles) {
 	        if (marble.getColour() == gameManager.getActivePlayerColour()) {

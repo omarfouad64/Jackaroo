@@ -14,15 +14,6 @@ public class Saver extends Wild {
 		super(name, description, boardManager, gameManager);
 	}
 	
-	public boolean validateMarbleColours(ArrayList<Marble> marbles) {
-	    for (Marble marble : marbles) {
-	        if (marble.getColour() != gameManager.getActivePlayerColour()) {
-	            return false;
-	        }
-	    }
-	    return true;
-	}
-	
 	public void act(ArrayList<Marble> marbles) throws ActionException, InvalidMarbleException {
 		if (!boardManager.getActionableMarbles().contains(marbles.get(0))) {
 			throw new InvalidMarbleException("ay 7aga");

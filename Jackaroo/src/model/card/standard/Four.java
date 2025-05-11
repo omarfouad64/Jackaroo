@@ -12,10 +12,6 @@ public class Four extends Standard {
 	public Four(String name, String description, Suit suit, BoardManager boardManager, GameManager gameManager) {
 		super(name, description, 4, suit, boardManager, gameManager);
 	}
-	
-	public boolean validateMarbleSize(ArrayList<Marble> marbles) {
-		return marbles.size() == 1;
-	}
 
 	public void act(ArrayList<Marble> marbles) throws ActionException, InvalidMarbleException {
 		if (marbles.size() == 1) {

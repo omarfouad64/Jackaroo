@@ -68,8 +68,8 @@ public class Player {
 	    }
 	    String cardName = selectedCard.getName().trim().toLowerCase();
 	    List<String> validCardNames = Arrays.asList(
-	            "ace card", "five card", "four", "jack card",
-	            "king", "queen", "seven card", "standard", 
+	            "ace card", "five card", "four card", "jack card",
+	            "king card", "queen card", "seven card", "standard", 
 	            "ten card", "burner", "saver"
 	        );
 
